@@ -11,7 +11,7 @@ select * from EMPLOYEES;
 
  -- display all employees based salary in Asc Order
 select * from EMPLOYEES
-order by SALARY asc;
+order by SALARY;
 
 -- display all employees based salary in Des Order
 select * from EMPLOYEES
@@ -41,8 +41,8 @@ order by SALARY desc ;
 
 --display all information from employees and order them based firstname asc
 select  * from EMPLOYEES
-order by FIRST_NAME asc;
+order by FIRST_NAME;
 
 --Display all information from employees and order them based firstName asc and based on lastName desc
  select * from EMPLOYEES
-order by FIRST_NAME asc,LAST_NAME desc ;
+order by FIRST_NAME ,LAST_NAME desc ;
