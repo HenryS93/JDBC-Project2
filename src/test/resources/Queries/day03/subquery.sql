@@ -1,56 +1,62 @@
-select * from EMPLOYEES;
+select * from employees;
 
---max salary
-select max(SALARY) from EMPLOYEES;
+--Display all information who is getting more than average
+    --Find the average
+select avg(SALARY) from EMPLOYEES;
 
--- if we know max salary can we find who is gettinjg
+--display who is getting over average
 select * from EMPLOYEES
-where SALARY = 24000; --> this is HARDCODED
+where SALARY > 6462;
 
---if Steven King salary changes we can't find person who is getting max salary
+
+--make it dynamic
+select avg(SALARY) from EMPLOYEES
+where SALARY > (select avg(SALARY) from EMPLOYEES);
+
+--HOMEWORK -->> DISPLAY: all information who is getting second minimum salary?
+--** HARDCODED **--
+select * from EMPLOYEES
+where SALARY = 2200;
 
 
 /*
- NOTES: SUBQUERY
- -instead we can combine this two query, basically we put second query
-  in  brackets and use it in the WHERE clause as an input
-
- SYNTAX:
- SELECT *
- FROM employees
- WHERE salary = (SELECT MAX(salary) FROM employees);
-
+ It limits row based on provided number
  */
 
---> ** SOLUTION **  we need to make it dynamic
-SELECT * from EMPLOYEES
-where SALARY=(select max(SALARY) from EMPLOYEES);
-
-
--- Give me all information who is getting min salary
-
---HARDCODED--
 select * from EMPLOYEES
-where SALARY = 2100;
+where ROWNUM< 11;
 
---DYNAMIC--
+--Display all information from employees who is getting 5 highest salary
 select * from EMPLOYEES
-where SALARY=(select min(SALARY) from EMPLOYEES);
-
---(HARDCODED) ->> FIND THE SECOND HIGHEST PAYING SALARY
-select max(SALARY) from EMPLOYEES;
+where ROWNUM <=5
+order by SALARY desc ;
 
 
---(DYNAMIC) -->> FIND THE SECOND HIGHEST PAYING SALARY
-select max(SALARY) from EMPLOYEES
-where SALARY <(select max(SALARY) from EMPLOYEES);
+select * from EMPLOYEES
+where ROWNUM < 6
+order by SALARY desc;
+
+--Display all information who is getting 5th highest salary
+    --Display 5th highest salary
+select min(SALARY) from (select distinct SALARY from EMPLOYEES order by SALARY desc)
+where rownum <=5;
+
+select * from EMPLOYEES
+where SALARY =(select min(salary) from (select distinct salary from EMPLOYEES order by SALARY desc)
+where rownum <6);
+
+
+--Display all information  who is getting 1212 highest salary
+select * from EMPLOYEES
+where SALARY = (select min(SALARY) from (select distinct SALARY from EMPLOYEES order by salary desc)
+where rownum <10);
+
+-- display all information who is getting 3rd lowest salary
+select * from EMPLOYEES
+where SALARY = (select max(SALARY) from (select distinct SALARY from EMPLOYEES order by salary  )
+where rownum < 3);
 
 
 
 
---(HARDCODED) -->> FIND THE SECOND LOWEST SALARY FROM EMPLOYEES
-select min(SALARY) from EMPLOYEEs;
 
---(DYNAMIC) -->> FIND THE SECOND LOWEST SALARY FROM EMPLOYEES
-select MIN(SALARY)from EMPLOYEES
-where SALARY > (select min(SALARY) from EMPLOYEES)
